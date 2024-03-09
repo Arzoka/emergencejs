@@ -6,7 +6,7 @@ entities.configureGlobals({ key: 'globalEntityX', value: 'random' });
 entities.configureGlobals({ key: 'globalEntityY', value: 'random' });
 
 // Not necessary to add this, but for this showcase all entities have the same amount.
-const amountPerEntity = 50;
+const amountPerEntity = 200;
 
 // Add entities
 entities.add({ color: 'red' }, amountPerEntity);

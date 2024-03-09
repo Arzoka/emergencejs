@@ -15,6 +15,12 @@ export default class Entity {
 		console.log(this.x, this.y);
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+
+		// add glow
+		ctx.shadowColor = this.color;
+		ctx.shadowBlur = 20;
+		ctx.shadowOffsetX = 0;
+		ctx.shadowOffsetY = 0;
 		ctx.fill();
 	}
 

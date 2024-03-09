@@ -77,23 +77,35 @@ export default class Entities {
 					const dx = entity.x - otherEntity.x;
 					const dy = entity.y - otherEntity.y;
 					const distance = Math.sqrt(dx * dx + dy * dy);
+					// Check if entities overlap
 					if (distance < entity.size + otherEntity.size) {
-						let currentForceX = entity.forceX;
-						let currentForceY = entity.forceY;
-						entity.forceX = entity.forceX / 2 + otherEntity.forceX / 2;
-						entity.forceY = entity.forceY / 2 + otherEntity.forceY / 2;
-						otherEntity.forceX = otherEntity.forceX / 2 + currentForceX / 2;
-						otherEntity.forceY = otherEntity.forceY / 2 + currentForceY / 2;
-
-						entity.colliding = true;
-						entity.collidingPosition = { x: otherEntity.x, y: otherEntity.y };
-					} else {
-						entity.colliding = false;
+						// Calculate overlap amount
+						const overlap = (entity.size + otherEntity.size) - distance;
+						// Calculate direction vector from otherEntity to entity
+						const dxNormalized = dx / distance;
+						const dyNormalized = dy / distance;
+						// Only adjust positions if the same color
+						if (entity.color === otherEntity.color) {
+							// Move entities apart by half the overlap each
+							entity.x += dxNormalized * overlap / 2;
+							entity.y += dyNormalized * overlap / 2;
+							otherEntity.x -= dxNormalized * overlap / 2;
+							otherEntity.y -= dyNormalized * overlap / 2;
+						} else {
+							// Different color collision handling (e.g., exchange forces)
+							let currentForceX = entity.forceX;
+							let currentForceY = entity.forceY;
+							entity.forceX = otherEntity.forceX;
+							entity.forceY = otherEntity.forceY;
+							otherEntity.forceX = currentForceX;
+							otherEntity.forceY = currentForceY;
+						}
 					}
 				}
 			});
 		});
 	}
+
 
 	calculateWithinRadius() {
 		this.entities.forEach((entity, i) => {
@@ -102,7 +114,7 @@ export default class Entities {
 					const dx = entity.x - otherEntity.x;
 					const dy = entity.y - otherEntity.y;
 					const distance = Math.sqrt(dx * dx + dy * dy);
-					if (distance < 100) {
+					if (distance < 200) {
 						if (EntityConfig[entity.color][otherEntity.color] === 'chase') {
 							entity.forceX = (otherEntity.x - entity.x) / 100;
 							entity.forceY = (otherEntity.y - entity.y) / 100;
