@@ -1,4 +1,8 @@
-import { entities, fps } from './constants';
+import { entities, fps } from './constants/index.js';
+
+document.getElementById('flipbutton').addEventListener('click', () => {
+	entities.flipEntityConfig();
+});
 
 // If these are configured it overwrites any other value regarding the same key on all entities.
 entities.configureGlobals({ key: 'globalEntitySize', value: 2 });

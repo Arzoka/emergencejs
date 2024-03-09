@@ -1,6 +1,6 @@
 import random from '../util/random.js';
 import Entity from './Entity.js';
-import { canvas, EntityConfig } from '../constants';
+import { canvas, EntityConfig } from '../constants/index.js';
 
 export default class Entities {
 	constructor() {
@@ -8,6 +8,7 @@ export default class Entities {
 		this.globalEntitySize = null;
 		this.globalEntityX = null;
 		this.globalEntityY = null;
+		this.EntityConfig = EntityConfig;
 	}
 
 	add({ x = 0, y = 0, size = 5, color = 'red' }, amount = 1) {
@@ -115,10 +116,10 @@ export default class Entities {
 					const dy = entity.y - otherEntity.y;
 					const distance = Math.sqrt(dx * dx + dy * dy);
 					if (distance < 200) {
-						if (EntityConfig[entity.color][otherEntity.color] === 'chase') {
+						if (this.EntityConfig[entity.color][otherEntity.color] === 'chase') {
 							entity.forceX = (otherEntity.x - entity.x) / 100;
 							entity.forceY = (otherEntity.y - entity.y) / 100;
-						} else if (EntityConfig[entity.color][otherEntity.color] === 'run') {
+						} else if (this.EntityConfig[entity.color][otherEntity.color] === 'run') {
 							entity.forceX = (entity.x - otherEntity.x) / 100;
 							entity.forceY = (entity.y - otherEntity.y) / 100;
 						}
@@ -128,5 +129,23 @@ export default class Entities {
 				}
 			});
 		});
+	}
+
+	flipEntityConfig() {
+		console.log('flip');
+		const newEntityConfig = {};
+		Object.keys(this.EntityConfig).forEach(color => {
+			newEntityConfig[color] = {};
+			Object.keys(this.EntityConfig[color]).forEach(otherColor => {
+				if (this.EntityConfig[color][otherColor] === 'chase') {
+					newEntityConfig[color][otherColor] = 'run';
+				} else if (this.EntityConfig[color][otherColor] === 'run') {
+					newEntityConfig[color][otherColor] = 'chase';
+				} else {
+					newEntityConfig[color][otherColor] = 'ignore';
+				}
+			});
+		});
+		this.EntityConfig = newEntityConfig;
 	}
 }

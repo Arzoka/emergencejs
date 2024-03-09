@@ -1,4 +1,4 @@
-import { canvas, ctx, drag } from '../constants';
+import { canvas, ctx, drag } from '../constants/index.js';
 
 export default class Entity {
 	constructor(x, y, size=5, color='#fff', forceX=0, forceY=0) {
@@ -12,7 +12,6 @@ export default class Entity {
 	draw() {
 		ctx.fillStyle = this.color;
 		this.update();
-		console.log(this.x, this.y);
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
 

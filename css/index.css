@@ -8,5 +8,19 @@ body {
 
 #canvas {
 	border: 1px solid #fff;
+}
 
+#flipbutton {
+	background: none;
+	border: 1px solid white;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 1em;
+	margin-top: 2em;
+	cursor: pointer;
+}
+
+#flipbutton:hover {
+	background-color: white;
+	color: black;
 }
