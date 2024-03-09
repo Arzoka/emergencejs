@@ -19,7 +19,7 @@ Ensure you have a modern web browser installed (e.g., Google Chrome, Firefox, Sa
 ### Installation
 1. Clone the repo
 ```shell
-git clone https://github.com/your_username_/Emergence_Canvas.git
+git clone https://github.com/Arzoka/emergencejs.git
 ```
 2. Open the index.html file in your web browser.
 
